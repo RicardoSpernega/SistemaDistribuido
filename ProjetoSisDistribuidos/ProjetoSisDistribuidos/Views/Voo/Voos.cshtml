@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ProjetoSisDistribuidos.Models.Voo>
+@{
+    ViewBag.Title = "Voos";
+}
+
+<h2>Voos</h2>
+@Html.DropDownList("codigo", new SelectList(Model, "Codigo", "Codigo"))
+<button onclick="enviarJson()">Enviar JSON</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Codigo</th>
+            <th scope="col">Origem</th>
+            <th scope="col">Destino</th>
+            <th scope="col">Horario</th>
+            <th scope="col">Companhia</th>
+            <th scope="col">Operando</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.Codigo</td>
+                <td>@i.Origem</td>
+                <td>@i.Destino</td>
+                <td>@i.AuxHorario</td>
+                <td>@i.Companhia</td>
+                <td>@i.Operando</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script type="text/javascript">
+    function enviarJson() {
+        var codigo = $("#codigo").val();
+        var parametro = codigo;
+        $.ajax({
+            url: "/Voo/EnviarJson?codigo=" + codigo,
+            type: "POST",
+            contentType: "application/json",
+            success: function (result) {
+                alert(result);
+            }
+        });
+    }
+
+</script>
+
